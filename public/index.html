@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="./img/icons/favicon-32x32.png" type="image/x-icon"/>
+    <meta
+      name="description"
+      content="Tarkista minkälaisia ilmoja pidellään ympäri maailmaa. Täytettä hetkeen joka vaatisi sitä paljon pelättyä small talkia, responsiivisesti, kauniisti ja nopeasti."
+    />
+    <title>On ilmoja pidellyt</title>
+    <style>
+      body::-webkit-scrollbar {
+        width: 0.35em;
+      }
+      body {
+        scrollbar-width: thin;
+        scrollbar-color: #00649e rgba(1, 0, 39, 0.5);
+      }
+      body::-webkit-scrollbar-track {
+        background: rgba(1, 0, 39, 0.5);
+      }
+      body::-webkit-scrollbar-thumb {
+        background-color: #00649e;
+        border-radius: 0.5em;
+        border: 0.09em solid rgb(1, 0, 39);
+      }
+      body::-webkit-scrollbar-thumb:hover {
+        background-color: #0074b8;
+        border-radius: 0.25em;
+        border: 0.1em solid rgb(1, 0, 39, 0.75);
+      }
+      body:hover {
+        scrollbar-color: #0074b8 rgba(1, 0, 39, 0.5);
+      }
+    </style>
+  </head>
+
+  <body class="day">
+    <noscript>
+      <strong
+        >Jotta voisit tarkistaa millaisia ilmoja ympäri maailmaa pidellään,
+        tarvitset selaimen jossa toimii javascript.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+  </body>
+</html>

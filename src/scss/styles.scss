@@ -1,0 +1,952 @@
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+        );
+      }
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+$mod_1: 1.2;
+$mod_2: 1.5;
+$min_width: 320px;
+$max_width: 1200px;
+$min_font: 16px;
+$max_font: 24px;
+$text-white50: rgb(250, 250, 250);
+$text-white80: rgb(201, 201, 201);
+$bg-white: rgba(57, 199, 235, 0.85);
+$bg-dark: rgba(2, 60, 75, 0.85);
+$bg-night-body: radial-gradient(
+  circle,
+  rgba(6, 5, 47, 1) 0%,
+  rgba(25, 9, 73, 0.5) 33%,
+  rgba(32, 8, 71, 0.5) 66%,
+  rgba(100, 8, 100, 0.5) 100%
+);
+$bg-day-body: radial-gradient(
+  circle,
+  rgb(19, 167, 123) 0%,
+  rgba(29, 168, 145, 0.5) 33%,
+  rgba(37, 142, 168, 0.5) 66%,
+  rgba(108, 31, 180, 0.5) 100%
+);
+$bg-con-day: rgb(122, 187, 236);
+$bg-con-night: rgba(0, 66, 117, 0.8);
+$bg-card-day: linear-gradient(
+  180deg,
+  rgb(122, 187, 236) 0%,
+  rgba(133, 21, 197, 0.6) 100%
+);
+$bg-card-night: linear-gradient(
+  180deg,
+  rgba(0, 66, 117, 0.8) 0%,
+  rgba(43, 0, 68, 0.5) 100%
+);
+$bg-kontti-day: rgba(133, 21, 197, 0.6);
+$bg-kontti-night: rgba(43, 0, 68, 0.5);
+$kortti-1-gradient: radial-gradient(
+  circle,
+  rgba(195, 138, 163, 1) 0%,
+  rgba(76, 130, 193, 1) 100%
+);
+$kortti-2-gradient: linear-gradient(
+  90deg,
+  rgba(38, 124, 126, 1) 0%,
+  rgba(34, 133, 149, 1) 50%,
+  rgba(19, 100, 123, 1) 100%
+);
+$kortti-3-gradient: linear-gradient(
+  0deg,
+  rgba(34, 193, 195, 1) 0%,
+  rgba(45, 116, 253, 1) 100%
+);
+$kortti-4-gradient: radial-gradient(
+  circle,
+  rgba(235, 73, 144, 1) 0%,
+  rgba(118, 19, 189, 1) 100%
+);
+//
+@font-face {
+  font-family: "RobotoMono-Regular";
+  src: url("../src/assets/fonts/RobotoMono-Regular.eot");
+  src: url("../src/assets/fonts/RobotoMono-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../src/assets/fonts/RobotoMono-Regular.otf") format("opentype"),
+    url("../src/assets/fonts/RobotoMono-Regular.svg") format("svg"),
+    url("../src/assets/fonts/RobotoMono-Regular.ttf") format("truetype"),
+    url("../src/assets/fonts/RobotoMono-Regular.woff") format("woff"),
+    url("../src/assets/fonts/RobotoMono-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+$font-roboto: "RobotoMono-Regular", sans-serif;
+$border-radius-25: 0.25em;
+$border-radius-50: 0.5em;
+$border-radius-75: 0.75em;
+$md-elevation-0: none;
+$md-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+$md-elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+html {
+  @include fluid-type($min_width, $max_width, $min_font, $max_font);
+  font-family: $font-roboto;
+}
+body {
+  line-height: 1.75em;
+  background-color: rgb(19, 167, 123);
+  background-image: $bg-day-body;
+  transition: background-color 0.5s ease-in-out;
+}
+body.night {
+  transition: background-color 0.5s ease-in-out;
+  background-color: rgb(89, 9, 109);
+  background-image: $bg-night-body;
+}
+h1 {
+  font-size: $mod_1 * $mod_1 * $mod_1 * $mod_1 * 1rem;
+  @include fluid-type(
+    $min_width,
+    $max_width,
+    $mod_1 * $mod_1 * $mod_1 * $min_font,
+    $mod_2 * $mod_2 * $mod_2 * $min_font
+  );
+}
+h2 {
+  font-size: $mod_1 * $mod_1 * $mod_1 * 1rem;
+  @include fluid-type(
+    $min_width,
+    $max_width,
+    $mod_1 * $mod_1 * $mod_1 * $min_font,
+    $mod_2 * $mod_2 * $mod_2 * $min_font
+  );
+}
+h3 {
+  font-size: $mod_1 * $mod_1 * 1rem;
+  @include fluid-type(
+    $min_width,
+    $max_width,
+    $mod_1 * $mod_1 * $min_font,
+    $mod_2 * $mod_2 * $min_font
+  );
+}
+img {
+  display: flex;
+  margin: 0 auto;
+}
+.home {
+  width: 100%;
+  margin: 0 auto;
+}
+img.logo {
+  animation: leiju 5s ease-in-out infinite;
+  filter: drop-shadow(2px 4px 6px white);
+  transition: filter 0.5s ease-in-out;
+}
+img.logo.night {
+  filter: hue-rotate(255deg);
+}
+#toimiiko {
+  text-align: center;
+  font-size: 1.25em;
+  background: $bg-con-day;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  line-height: 1em;
+  padding: 0.25em;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+  max-width: inherit;
+  transition: background 0.5s ease-in-out;
+}
+#toimiiko.night {
+  background: $bg-con-night;
+}
+#h1_kaupunki {
+  letter-spacing: 0.175em;
+  transition: color 0.5s ease-in-out;
+  text-align: center;
+  margin: 0 auto;
+}
+#ilmoja_pidellyt {
+  position: relative;
+  max-width: 55vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  border: 0.1em solid black;
+  padding: 0.25em;
+  border-radius: 0.25em;
+  margin: 0 auto 2em;
+  animation: leiju 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 2em rgba(13, 161, 129, 0.9));
+}
+#lokaatio {
+  transition: color 0.5s ease-in-out;
+  background-color: $bg-con-day;
+  color: black;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+  font-family: $font-roboto;
+  text-align: center;
+  font-size: $mod_1 * $mod_1 * $mod_1 * $mod_1 * 1rem;
+  @include fluid-type(
+    $min_width,
+    $max_width,
+    $mod_1 * $mod_1 * $mod_1 * $min_font,
+    $mod_2 * $mod_2 * $mod_2 * $min_font
+  );
+  margin: 1em auto 0;
+  display: flex;
+  justify-content: center;
+  height: 3em;
+  width: 90vw;
+}
+#lokaatio:focus {
+  outline: inherit;
+}
+#lokaatio.day {
+  transition: background-color 0.5s ease-in-out;
+  color: black;
+}
+#lokaatio.night {
+  transition: background-color 0.5s ease-in-out;
+  background-color: $bg-con-night;
+  color: white;
+}
+#lokaatio_kontti {
+  transition: color 0.5s ease-in-out;
+  position: fixed;
+  z-index: 1021;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(36, 165, 133, 0.99);
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  animation: palaa 0.5s forwards;
+}
+#lokaatio_kontti.day {
+  transition: bacgrkound-color 0.5s ease-in-out;
+  color: black;
+  background-color: rgba(200, 16, 236, 0.99);
+}
+#lokaatio_kontti.night {
+  transition: background-color 0.5s ease-in-out;
+  color: white;
+  background-color: rgba(8, 92, 78, 0.99);
+}
+#lokaatio_kontti.valmis,
+#lokaatio.valmis {
+  animation: haivy 0.5s forwards;
+}
+#ilmoituksia {
+  cursor: pointer;
+  text-align: center;
+  padding: 0.5em;
+  border: 0.1em solid black;
+  border-radius: 20em;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  animation: pompi 2s ease-in-out infinite;
+}
+#ilmoituksia.day {
+  background-color: rgba(195, 138, 163, 1);
+}
+#ilmoituksia.night {
+  background-color: rgba(118, 19, 189, 1);
+}
+#varot_h1 {
+  text-align: center;
+  letter-spacing: 0.2em;
+  margin: 0.5em auto;
+  text-transform: uppercase;
+}
+.notification_list {
+  border: 0.1em solid black;
+  border-radius: $border-radius-75;
+  padding: 0.5em;
+  background-color: rgba(2, 60, 75, 0.45);
+}
+.notification {
+  margin: 0.2em auto;
+  padding: 1em;
+}
+.varoitus {
+  position: fixed;
+  bottom: 0.1em;
+  left: 0.35em;
+  z-index: 1021;
+}
+.ilmoitukset {
+  display: none;
+  z-index: 0;
+}
+.ilmoitukset.valmis {
+  animation: palaa 0.5s forwards;
+  position: fixed;
+  margin: 0 auto;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  justify-content: center;
+  z-index: 1021;
+  background: rgb(45, 253, 247);
+  background: linear-gradient(
+    0deg,
+    rgba(45, 253, 247, 0.75) 0%,
+    rgba(197, 73, 255, 0.9) 77%
+  );
+}
+.ilmoitukset.valmis::-webkit-scrollbar {
+  display: none;
+}
+.ilmoitukset.night.valmis {
+  background: rgb(45, 253, 247);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 141, 136, 0.75) 0%,
+    rgba(63, 0, 92, 0.9) 77%
+  );
+}
+.notification {
+  font-weight: 700;
+  border-radius: $border-radius-50;
+  border: 0.1em solid black;
+}
+#sulje {
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  border: 0.1em solid black;
+  border-radius: $border-radius-75;
+  padding: 0.1em;
+  right: 0.6em;
+  top: 0.6em;
+  animation: zoom 3s ease-in-out infinite;
+}
+.data-teksti.day.very_cold {
+  background-color: rgba(74, 213, 255, 0.5);
+}
+.data-teksti.night.very_cold {
+  background-color: rgba(0, 109, 182, 0.5);
+}
+.data-teksti.day.cold {
+  background-color: rgba(110, 226, 255, 0.5);
+}
+.data-teksti.night.cold {
+  background-color: rgba(0, 158, 197, 0.5);
+}
+.data-teksti.day.low {
+  background-color: rgba(130, 216, 202, 0.5);
+}
+.data-teksti.night.low {
+  background-color: rgba(0, 104, 86, 0.5);
+}
+.data-teksti.day.mid {
+  background-color: rgba(222, 253, 109, 0.7);
+}
+.data-teksti.night.mid {
+  background-color: rgba(158, 168, 15, 0.7);
+}
+.data-teksti.day.hgh {
+  background-color: rgba(241, 104, 104, 0.7);
+}
+.data-teksti.night.hgh {
+  background-color: rgba(168, 15, 15, 0.7);
+}
+.data-teksti.day.very_hgh {
+  background-color: rgba(255, 75, 75, 0.7);
+}
+.data-teksti.night.very_hgh {
+  background-color: rgba(202, 0, 0, 0.7);
+}
+#haku {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  border: 0.05em solid black;
+  border-radius: 2em;
+  mix-blend-mode: hard-light;
+  transition: background-color 0.5s ease-in-out;
+  padding: 0.1em;
+  width: 2em;
+  height: 1em;
+  background-color: $bg-con-day;
+}
+#haku.night {
+  transition: background-color 0.5s ease-in-out;
+  background-color: $bg-con-night;
+}
+#haku > svg {
+  transition: filter 0.5s ease-in-out;
+  justify-content: center;
+  margin: auto;
+}
+#haku.night > svg {
+  filter: invert(0.85);
+}
+button {
+  all: unset;
+}
+button.daynight,
+button.widget {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 5em;
+  transition: filter 0.5s ease-in-out;
+  border: 0.1em solid black;
+}
+button.lamppu.day.daynight,
+button.widget {
+  transition: background-color filter 0.5s ease-in-out;
+  filter: drop-shadow(-0.1em -0.1em 0.1em rgba(188, 206, 108, 0.8));
+  background-color: rgba(2, 151, 189, 0.85);
+}
+button.lamppu.night.daynight,
+button.widget {
+  filter: none;
+  background-color: rgb(24, 111, 133);
+}
+button.daynight.widget {
+  position: absolute;
+  top: 0.3em;
+  right: 0.3em;
+  width: 2em;
+  height: 2em;
+}
+svg#lamppu {
+  margin: auto;
+  transition: filter 0.5s ease-in-out;
+}
+button.night.daynight > #lamppu {
+  filter: brightness(0.25);
+}
+button.night.daynight > #lamppu > g#sade {
+  opacity: 0;
+}
+.day a {
+  color: black;
+}
+.night a {
+  color: $text-white80;
+}
+#aika {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  line-height: 1em;
+  border-radius: $border-radius-50;
+}
+#klo,
+#pvm {
+  margin: 0 auto;
+  background-color: $bg-con-day;
+  display: flex;
+  padding: 0.25em;
+  justify-content: center;
+  margin: 0.5em auto;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+  text-align: center;
+  font-size: 1.15em;
+  font-weight: 900;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+#klo.night,
+#pvm.night {
+  background-color: $bg-dark;
+}
+#paivitys {
+  cursor: pointer;
+  border: 0.1em solid black;
+  border-radius: 0.25em;
+  padding: 0.2em;
+  display: inline-block;
+  margin: 1em auto;
+  animation: zoom 2s ease-in-out infinite;
+}
+#atm_icon {
+  width: 10em;
+  height: 5em;
+  margin: 0.45em auto;
+  border-radius: 5em;
+  transition: filter 0.5s ease-in-out;
+  animation: leiju 3s ease-in-out infinite;
+}
+#atm_icon.day {
+  filter: drop-shadow(0 0 1em rgb(231, 179, 247));
+}
+#atm_icon.night {
+  filter: drop-shadow(0 0 1em rgb(17, 150, 143));
+}
+#log {
+  cursor: pointer;
+  font-family: $font-roboto;
+  text-transform: uppercase;
+  color: black;
+  width: 45vw;
+  height: 1.5em;
+  margin: 0 auto 1em;
+  display: flex;
+  justify-content: center;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+  background-color: rgba(162, 236, 255, 0.5);
+  transition: background-color 0.5s ease-in-out;
+}
+#log:hover {
+  filter: brightness(0.7);
+}
+#log.night {
+  transition: color 0.5s ease-in-out;
+  color: #fff;
+  background-color: rgba(1, 60, 75, 0.5);
+}
+#app {
+  width: 100%;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container {
+  border-radius: $border-radius-25 $border-radius-25 0 0;
+  width: 100%;
+  top: 0;
+  z-index: 1020;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  box-shadow: $md-elevation-8;
+  border-bottom: 0.1em solid black;
+}
+.container.day {
+  transition: background-color 0.5s ease-in-out;
+  background-color: $bg-con-day;
+}
+.container.night {
+  transition: background-color 0.5s ease-in-out;
+  background-color: $bg-con-night;
+}
+.main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  border-radius: 0 0 $border-radius-25 $border-radius-25;
+}
+.main.day {
+  transition: background-color 0.5s ease-in-out;
+  background-color: rgba(0, 137, 172, 0.55);
+}
+.main.night {
+  transition: background-color 0.5s ease-in-out;
+  background-color: rgba(2, 60, 75, 0.55);
+}
+.kontin_isa {
+  border-radius: 0 0 $border-radius-25 $border-radius-25;
+  width: 100%;
+  z-index: 1020;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  box-shadow: $md-elevation-8;
+}
+.navbar {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+}
+.navbar-nav {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.nav-item {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  margin: auto 0.5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+}
+.nav-item.day {
+  color: black;
+}
+.nav-item.night {
+  color: $text-white50;
+}
+.atm_lampo {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 75%;
+  margin: 0.5em auto;
+  padding: 0.2em;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+}
+.atm_lampo.day {
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  background-color: $bg-white;
+}
+.atm_lampo.night {
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  background-color: $bg-dark;
+}
+.atm > .sisalto > .kontti > .card > .card-body > .data-teksti {
+  display: flex;
+  justify-content: center;
+  max-width: 75%;
+  margin: 0.5em auto;
+}
+.data-teksti {
+  text-align: center;
+  padding: 0.1em;
+  border: 0.1em solid black;
+  border-radius: $border-radius-25;
+}
+.data-teksti.day,
+.notification.day {
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  background-color: $bg-con-day;
+}
+.data-teksti.night,
+.notification.night {
+  background-color: $bg-con-night;
+}
+p.day {
+  padding: 0 0.2em;
+  margin: 0;
+  display: inline-block;
+  border-radius: $border-radius-25;
+  filter: drop-shadow(-0.09em 0.06em 0 black);
+}
+p.day.mid {
+  padding: 0.15em;
+  background-color: rgb(255, 240, 103);
+}
+p.night.mid {
+  padding: 0.15em;
+  background-color: rgb(170, 159, 1);
+}
+p.day.hgh {
+  padding: 0.15em;
+  background-color: rgb(255, 133, 103);
+}
+p.night.hgh {
+  padding: 0.15em;
+  background-color: rgb(146, 29, 0);
+}
+.day {
+  transition: color 0.5s ease-in-out;
+  color: black;
+}
+.night {
+  transition: color 0.5s ease-in-out;
+  color: white;
+}
+.text-white50 {
+  color: $text-white50;
+}
+.text-white80 {
+  color: $text-white80;
+}
+.bg-card-night {
+  background-color: $bg-card-night !important;
+}
+.kortti-1-gradient {
+  background: $kortti-1-gradient;
+}
+.kortti-2-gradient {
+  background: $kortti-2-gradient;
+}
+.kortti-3-gradient {
+  background: $kortti-3-gradient;
+}
+.kortti-4-gradient {
+  background: $kortti-4-gradient;
+}
+.border-radius-75 {
+  border-radius: $border-radius-75 !important;
+}
+.border-radius-50 {
+  border-radius: $border-radius-50 !important;
+}
+.border-radius-75 {
+  border-radius: $border-radius-75 !important;
+}
+.shadow-none {
+  box-shadow: $md-elevation-0;
+}
+.atm {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.kontti {
+  height: inherit;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+}
+.kortit {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+.sisalto {
+  transition: background-color 0.5s ease-in-out;
+  width: inherit;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+.sisalto.day {
+  background: $bg-card-day;
+}
+.sisalto.night {
+  background: $bg-card-night;
+}
+.responsive {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-evenly;
+}
+.kortti {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+.details_ikoni {
+  width: 5em;
+  transition: filter 0.5s ease-in-out;
+}
+.details_ikoni.night {
+  filter: invert(1);
+}
+.details,
+.details_kontti,
+.details_section,
+.details_lista {
+  margin: 0 auto 0.25em;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+}
+ul.details_lista {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0.5em 0.25em;
+}
+ul {
+  list-style-type: none;
+  margin-block-start: inherit;
+  margin-block-end: inherit;
+  margin-inline-start: inherit;
+  margin-inline-end: inherit;
+  padding-inline-start: inherit;
+  padding-inline-end: inherit;
+}
+.card {
+  border: 0.1em solid black;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  padding: 0.1em;
+  margin: 1em;
+  width: inherit;
+  box-shadow: $md-elevation-1;
+  border-radius: $border-radius-50;
+  .card-img-top {
+    border-top-left-radius: $border-radius-75;
+    border-top-right-radius: $border-radius-75;
+  }
+}
+.card-body {
+  width: inherit;
+  margin: 0 auto;
+}
+/* Syöte css */
+::-webkit-input-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:-moz-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+::-moz-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:-ms-input-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover::-webkit-input-placeholder {
+  opacity: 0.75;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover:-moz-placeholder {
+  opacity: 0.75;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover::-moz-placeholder {
+  opacity: 0.75;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover:-ms-input-placeholder {
+  opacity: 0.75;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus::-webkit-input-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus:-moz-placeholder {
+  opacity: 0;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus::-moz-placeholder {
+  opacity: 0;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus:-ms-input-placeholder {
+  opacity: 0;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+@keyframes haivy {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+    z-index: -1;
+  }
+}
+@keyframes palaa {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes leiju {
+  0% {
+    -webkit-transform: translate(0) rotate(0.1deg);
+    -moz-transform: translate(0) rotate(0.1deg);
+    transform: translate(0) rotate(0.1deg);
+  }
+  50% {
+    -webkit-transform: translate(-0.15em, -0.15em);
+    -moz-transform: translate(-0.15em, -0.15em);
+    transform: translate(-0.15em, -0.15em);
+  }
+  100% {
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    transform: translate(0);
+  }
+}
+@keyframes pompi {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1em);
+    filter: drop-shadow(0 -0.25em 0.5em rgb(255, 254, 209));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+    background-color: rgba(57, 199, 235, 0.45);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 610px) {
+  .responsive {
+    flex-direction: column;
+  }
+}
+@media screen and (min-width: 24.15em) {
+  body {
+    line-height: calc(1.3em + (1.5 - 1.3) * ((100vw - 21em) / (35 - 21)));
+  }
+}
+
+@media (min-width: 40.25em) {
+  body {
+    line-height: 1.5em;
+  }
+}
